@@ -1,0 +1,6 @@
+framework module Pods_SwiftAPIClient {
+  umbrella header "Pods-SwiftAPIClient-umbrella.h"
+
+  export *
+  module * { export * }
+}

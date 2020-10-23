@@ -262,7 +262,7 @@ public class TestProjectApi {
         
         private init(errorMsg: String?, entities: [T]?, statusCode : Int){
             self.entities = entities
-            self.errorMsg = errorMsgx
+            self.errorMsg = errorMsg
             self.statusCode = statusCode
         }
         

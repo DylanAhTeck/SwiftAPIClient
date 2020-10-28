@@ -20,6 +20,10 @@ public class AccountApi {
         return api.create(entity: account, completionHandler: completionHandler)
     }
     
+    func delete(id: String, _  completionHandler: @escaping () -> () = {}) {
+        api.delete(id: id, ofClass: Account.self, completionHandler)
+    }
+    
     func findOne(id: String, completionHandler: @escaping (_ FindResult : TestProjectApi.FindResult<Account>) -> ()){
     
         return api.findOne(id: id, ofClass: Account.self, completionHandler: completionHandler)

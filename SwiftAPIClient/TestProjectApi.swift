@@ -184,11 +184,14 @@ public class TestProjectApi {
         }
     }
     
-    public func delete<T: Codable>(id: String, ofClass: T){
-            self.sessionManager?.request("\(self.url)/Account/\(id)", method: .delete, encoding: JSONEncoding.default).responseJSON{ response in
+    public func delete<T: DomainObject>(id: String, ofClass: T.Type, _ completionHandler: @escaping()-> ()){
+        
+            let className = String(describing: ofClass)
+            self.sessionManager?.request("\(self.url)/\(className)/\(id)", method: .delete, encoding: JSONEncoding.default).responseJSON{ response in
                 switch response.result {
                        case .success:
-                           print("Validation Successful")
+                           print("Delete Successful")
+                           completionHandler()
                        case .failure(let error):
                            print(error)
                        }

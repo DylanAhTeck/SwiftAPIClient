@@ -24,20 +24,17 @@ class AccountExamples {
                     account.findOne(id: createdId, completionHandler: { (FindResult: TestProjectApi.FindResult<Account>) -> () in
                         
                         print("Find result: \(FindResult)")
-                        if let account = FindResult.entity {
+                        if let accountResult = FindResult.entity {
                            
                             //Check if this works rather than comment below it
-                            self.printCount()
+                            self.printCount({
+                                let id = accountResult.getId() ?? "0"
+                                account.delete(id: id, {
+                                    self.printCount();
+                                })
+                            }
+                            )
                             
-                            //print("Account rows in the database (expecting at least 1):  \(self.count())");
-
-                            //Delete Account
-//                            api.account.delete(accountToCreate, completionHandler: {
-//
-//                            })
-//                          print("Delete results \()")
-                           // print("Account rows in the database: \(self.count())");
-
                             
                         }
                     }
@@ -51,13 +48,14 @@ class AccountExamples {
     }
     }
     
-    static func printCount() {
+    static func printCount(_ completionHandler: @escaping () -> () = {}) {
         if let account = api.account {
             account.findMany(completionHandler: {
                   (FindManyResult : TestProjectApi.FindManyResult) -> () in
                 
                 if let entities = FindManyResult.entities{
                     print("Account rows in the database (expecting at least 1):  \(entities.count)");
+                    completionHandler()
                 }
               })
         }

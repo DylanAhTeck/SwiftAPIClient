@@ -6,21 +6,19 @@ class AccountExamples {
     
     public static func run() {
         createAndRetrieveSingleAccount()
+        //createMany()
     }
     
     public static func createAndRetrieveSingleAccount() {
         // Change this to ExampleDataHelper
-        let accountToCreate = Account(name: "Dylan", id: "321")
+        let accountToCreate = Account(name: "Pierce", id: "333")
 
         if let account = api.account {
 
             account.create(account: accountToCreate, completionHandler: { (CreateResult: TestProjectApi.CreateResult) ->() in
                 
                 print("Create result: \(CreateResult)")
-                print(CreateResult)
                 if let createdId = CreateResult.id {
-                    
-                    
                     account.findOne(id: createdId, completionHandler: { (FindResult: TestProjectApi.FindResult<Account>) -> () in
                         
                         print("Find result: \(FindResult)")
@@ -34,18 +32,27 @@ class AccountExamples {
                                 })
                             }
                             )
-                            
-                            
                         }
-                    }
-                    
-                    )
-                    
-            
+                    })
                 }
             }
         )
     }
+    }
+    
+    //Todo: find out how to format when posting array of objects
+    public static func createMany() {
+        var accounts: [Account] = []
+        accounts.append(Account(name: "John", id: "11"))
+        accounts.append(Account(name: "Dick", id: "12"))
+        accounts.append(Account(name: "Harry", id: "13"))
+        
+        if let account = api.account {
+            account.createMany(accounts: accounts, completionHandler: { (CreateManyResult: TestProjectApi.CreateManyResult) -> () in
+                print("Create many result: \(CreateManyResult)")
+            }
+            )
+        }
     }
     
     static func printCount(_ completionHandler: @escaping () -> () = {}) {
@@ -60,7 +67,6 @@ class AccountExamples {
               })
         }
     }
-    
     
     func get(){
         let request = AF.request("http://127.0.0.1:7000/exampleuser/testproject/Account")

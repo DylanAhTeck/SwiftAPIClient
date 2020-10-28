@@ -106,28 +106,43 @@ public class TestProjectApi {
         }
     }
     
-    public func createMany<T: Codable>(entities: [T]){
+    public func createMany<T: DomainObject>(entities: [T], completionHandler: @escaping (_ CreateManyResult : CreateManyResult) -> ())  {
         do {
-            let data = try entities.asDictionary()
-            var id : String?
+            var data : [String: [[String: Any]?]] = [:]
+            var array : [[String: Any]?] = []
+            entities.forEach{entity in
+                do {
+                    let dict = try entity.asDictionary()
+                    array.append(dict)
+                }
+                catch {
+                    
+                }
+            }
+            data["data"] = array
+            //data["data"] = entities
+            //let data = try entities.asDictionary()
+            var ids : [String]?
             var errMsg: String?
-            self.sessionManager?.request("\(self.url)/Account", method: .post, parameters: data, encoding: JSONEncoding.default).responseJSON{
+            let className = String(describing: T.self)
+            self.sessionManager?.request("\(self.url)/\(className)", method: .post, parameters: data, encoding: JSONEncoding.default).responseJSON{
                 (response) in
                 
                 guard let httpStatusCode = response.response?.statusCode else {
                     return;
                  }
                 if case .success = response.result {
-                    id = self.idFrom(response: response)
+                    ids = self.idsFrom(response: response)
                 }
                 else {
                     errMsg = self.errorMessageFrom(response: response)
                 }
-               // completionHandler(id, errMsg, httpStatusCode)
+                let result = CreateManyResult(errorMsg: errMsg, ids: ids, statusCode :httpStatusCode)
+                completionHandler(result)
             }
             
         } catch {
-            print("An error occured: \(error)")
+            print("An error occured:")
         }
     }
     
@@ -244,6 +259,15 @@ public class TestProjectApi {
         }
         return id
     }
+    private func idsFrom(response:AFDataResponse<Any>)-> [String]? {
+        
+        if let json = response.value as? [String: Any?] {
+            if let array = json["insertedIds"] as? [String]{
+                return array
+            }
+        }
+        return []
+    }
     
     private func errorMessageFrom(response: AFDataResponse<Any>) -> String? {
         return response.error?.errorDescription
@@ -322,7 +346,7 @@ public class TestProjectApi {
         public final var errorMsg: String?
         public final var statusCode: Int
         
-        private init(errorMsg: String?, ids: [String]?, statusCode : Int){
+        init(errorMsg: String?, ids: [String]?, statusCode : Int){
             self.ids = ids
             self.errorMsg = errorMsg
             self.statusCode = statusCode

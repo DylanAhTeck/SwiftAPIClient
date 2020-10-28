@@ -20,6 +20,11 @@ public class AccountApi {
         return api.create(entity: account, completionHandler: completionHandler)
     }
     
+    func createMany(accounts: [Account], completionHandler: @escaping (_ CreateManyResult : TestProjectApi.CreateManyResult) -> ()){
+        
+        return api.createMany(entities: accounts, completionHandler: completionHandler)
+    }
+    
     func delete(id: String, _  completionHandler: @escaping () -> () = {}) {
         api.delete(id: id, ofClass: Account.self, completionHandler)
     }

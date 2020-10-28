@@ -25,7 +25,11 @@ public class AccountApi {
         return api.findOne(id: id, ofClass: Account.self, completionHandler: completionHandler)
     }
     
-    func findAll() -> TestProjectApi.FindManyResult<Account> {
+    func findAll(completionHandler: @escaping (_ FindResult : TestProjectApi.FindManyResult<Account>) -> ()){
         
+    }
+    
+    func findMany(completionHandler: @escaping (_ FindResult : TestProjectApi.FindManyResult<Account>) -> ()){
+        return api.findMany(attrs: Dictionary(), ofClass: Account.self, completionHandler: completionHandler);
     }
 }

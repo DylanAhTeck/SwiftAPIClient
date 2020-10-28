@@ -10,28 +10,33 @@ class AccountExamples {
     
     public static func createAndRetrieveSingleAccount() {
         // Change this to ExampleDataHelper
-        let accountToCreate = Account(name: "Dylan", id: "123")
-        
+        let accountToCreate = Account(name: "Dylan", id: "321")
+
         if let account = api.account {
 
             account.create(account: accountToCreate, completionHandler: { (CreateResult: TestProjectApi.CreateResult) ->() in
                 
                 print("Create result: \(CreateResult)")
-                
+                print(CreateResult)
                 if let createdId = CreateResult.id {
+                    
                     
                     account.findOne(id: createdId, completionHandler: { (FindResult: TestProjectApi.FindResult<Account>) -> () in
                         
                         print("Find result: \(FindResult)")
-                        if FindResult.entity != nil {
-                            print("Account rows in the database (expecting at least 1):  \(self.count())");
+                        if let account = FindResult.entity {
+                           
+                            //Check if this works rather than comment below it
+                            self.printCount()
+                            
+                            //print("Account rows in the database (expecting at least 1):  \(self.count())");
 
                             //Delete Account
 //                            api.account.delete(accountToCreate, completionHandler: {
 //
 //                            })
 //                          print("Delete results \()")
-                            print("Account rows in the database: \(self.count())");
+                           // print("Account rows in the database: \(self.count())");
 
                             
                         }
@@ -46,11 +51,16 @@ class AccountExamples {
     }
     }
     
-    static func count() -> Int {
-        return 0
-//        return api.account.findAll(completionHandler: {
-//
-//        })
+    static func printCount() {
+        if let account = api.account {
+            account.findMany(completionHandler: {
+                  (FindManyResult : TestProjectApi.FindManyResult) -> () in
+                
+                if let entities = FindManyResult.entities{
+                    print("Account rows in the database (expecting at least 1):  \(entities.count)");
+                }
+              })
+        }
     }
     
     

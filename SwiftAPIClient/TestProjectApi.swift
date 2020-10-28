@@ -141,14 +141,49 @@ public class TestProjectApi {
                 return;
              }
             
-            guard case .success = response.result else {
+            guard case .success = response.result, let entity = response.value else {
                 return completionHandler(FindResult(errorMsg: response.debugDescription, entity: nil, statusCode: response.response?.statusCode ?? 0))
             }
-            let entity: T = response.result as! T
+            
             completionHandler(FindResult(errorMsg: "", entity: entity, statusCode: httpStatusCode))
         }
-        
     }
+    
+    //Todo: need to add error checking
+    //Todo: need to check if adding attributes to string works
+    public func findMany<T: DomainObject>(attrs: [String: T], ofClass: T.Type, completionHandler: @escaping (_ FindManyResult: FindManyResult<T>) -> ()) {
+        
+        let className = String(describing: ofClass)
+        guard let url = URL(string: "\(self.url)/\(className)/") else {
+            print("Invalid url")
+            return;
+        }
+//        var urlRequest = URLRequest(url: url)
+//        var urlRequestConvertable : URLConvertible?
+//        do {
+//            urlRequest.httpBody = try JSONEncoder().encode(attrs)
+//            urlRequestConvertable = try urlRequest.asURLRequest()
+//        } catch {
+//            print("Invalid attributes")
+//            return
+//        }
+        
+        //Look as URLConvertible force unwrap
+        //Still need to handle queries passed in as dictionary
+        self.sessionManager?.request("\(self.url)/\(className)/", method: .get, encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseDecodable(of: [T].self){
+            (response) in
+
+            guard let httpStatusCode: Int = response.response?.statusCode else {
+                return;
+             }
+            guard case .success = response.result, let entities = response.value else {
+                return completionHandler(FindManyResult(errorMsg: response.debugDescription, entities: nil, statusCode: httpStatusCode))
+            }
+            
+            completionHandler(FindManyResult(errorMsg: "", entities: entities, statusCode: httpStatusCode))
+        }
+    }
+    
     public func delete<T: Codable>(id: String, ofClass: T){
             self.sessionManager?.request("\(self.url)/Account/\(id)", method: .delete, encoding: JSONEncoding.default).responseJSON{ response in
                 switch response.result {
@@ -199,9 +234,9 @@ public class TestProjectApi {
     
     private func idFrom(response: AFDataResponse<Any>) -> String? {
         var id : String?
-        if let json = response.value as? NSDictionary {
-            if let array = json["insertedIds"] as? [Int]{
-                id =  String(array[0])
+        if let json = response.value as? [String: Any?] {
+            if let array = json["insertedIds"] as? [String]{
+                id =  array[0]
             }
         }
         return id
@@ -260,7 +295,7 @@ public class TestProjectApi {
         public final var errorMsg: String?
         public final var statusCode: Int
         
-        private init(errorMsg: String?, entities: [T]?, statusCode : Int){
+        init(errorMsg: String?, entities: [T]?, statusCode : Int){
             self.entities = entities
             self.errorMsg = errorMsg
             self.statusCode = statusCode

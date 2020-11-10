@@ -6,7 +6,7 @@ target 'SwiftAPIClient' do
   use_frameworks!
 
   # Pods for SwiftAPIClient
-  pod "Alamofire"
+  pod "Alamofire", :git => 'https://github.com/Alamofire/Alamofire.git', :tag => ‘5.4.0’
 
   target 'SwiftAPIClientTests' do
     inherit! :search_paths

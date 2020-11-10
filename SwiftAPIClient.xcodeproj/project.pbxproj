@@ -56,6 +56,7 @@
 		C92F33632536CDBA003DF482 /* EndpointItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointItem.swift; sourceTree = "<group>"; };
 		C92F33682536CDFB003DF482 /* EndPointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
 		C92F336E2536D867003DF482 /* AccountApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountApi.swift; sourceTree = "<group>"; };
+		C93F2A48255A790000670F01 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		C97B2E15252DAED5000EAFB9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9934A6D25286D9D00B8A446 /* SwiftAPIClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftAPIClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9934A7025286D9D00B8A446 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +73,7 @@
 		C9934A8F25286DA400B8A446 /* SwiftAPIClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftAPIClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9934A9325286DA400B8A446 /* SwiftAPIClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAPIClientUITests.swift; sourceTree = "<group>"; };
 		C9934A9525286DA400B8A446 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9D9CA8825429202009D8E44 /* SwiftAPIClient */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftAPIClient; sourceTree = "<group>"; };
+		C9D9CA8825429202009D8E44 /* SwiftAPIClient */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftAPIClient; sourceTree = "<group>"; };
 		C9D9CA8F25429298009D8E44 /* DomainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainObject.swift; sourceTree = "<group>"; };
 		DD20F1E1BD129221759E39EC /* Pods-SwiftAPIClient-SwiftAPIClientUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPIClient-SwiftAPIClientUITests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftAPIClient-SwiftAPIClientUITests/Pods-SwiftAPIClient-SwiftAPIClientUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E08722A6AD737A5759995A83 /* Pods-SwiftAPIClientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAPIClientTests.release.xcconfig"; path = "Target Support Files/Pods-SwiftAPIClientTests/Pods-SwiftAPIClientTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 		C9934A6425286D9D00B8A446 = {
 			isa = PBXGroup;
 			children = (
+				C93F2A48255A790000670F01 /* LICENSE.md */,
 				C9D9CA8D25429235009D8E44 /* DomainClasses */,
 				C92F336D2536D849003DF482 /* APIs */,
 				C97B2E14252DAE9D000EAFB9 /* Models */,

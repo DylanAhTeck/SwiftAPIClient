@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "SwiftAPIClient"
-  spec.version      = "0.0.1"
+  spec.version      = "0.1.0"
   spec.summary      = "Test Pod for the CodeBot SwiftAPIClient"
 
   # This description is used to generate tags and improve search results.

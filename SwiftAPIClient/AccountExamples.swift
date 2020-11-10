@@ -11,19 +11,24 @@ class AccountExamples {
     
     public static func createAndRetrieveSingleAccount() {
         // Change this to ExampleDataHelper
-        let accountToCreate = Account(name: "Pierce", id: "333")
+        let accountToCreate = Account(name: "Pierce", id: "4321")
 
         if let account = api.account {
 
             account.create(account: accountToCreate, completionHandler: { (CreateResult: TestProjectApi.CreateResult) ->() in
                 
-                print("Create result: \(CreateResult)")
+                print("Create result: \(CreateResult.toString())")
+                if CreateResult.isOk() {
+                    print("Successfully created account:\(accountToCreate.toString())")
+                }
+                
                 if let createdId = CreateResult.id {
                     account.findOne(id: createdId, completionHandler: { (FindResult: TestProjectApi.FindResult<Account>) -> () in
                         
-                        print("Find result: \(FindResult)")
+                        print("Find result: \(FindResult.toString())")
+                        
                         if let accountResult = FindResult.entity {
-                           
+                          
                             //Check if this works rather than comment below it
                             self.printCount({
                                 let id = accountResult.getId() ?? "0"
@@ -42,14 +47,20 @@ class AccountExamples {
     
     //Todo: find out how to format when posting array of objects
     public static func createMany() {
-        var accounts: [Account] = []
-        accounts.append(Account(name: "John", id: "11"))
-        accounts.append(Account(name: "Dick", id: "12"))
-        accounts.append(Account(name: "Harry", id: "13"))
+        var accountList: [Account] = []
+        accountList.append(Account(name: "John", id: "11"))
+        accountList.append(Account(name: "Dick", id: "12"))
+        accountList.append(Account(name: "Harry", id: "13"))
         
         if let account = api.account {
-            account.createMany(accounts: accounts, completionHandler: { (CreateManyResult: TestProjectApi.CreateManyResult) -> () in
+            account.createMany(entities: accountList, completionHandler: { (CreateManyResult: TestProjectApi.CreateManyResult) -> () in
                 print("Create many result: \(CreateManyResult)")
+                if CreateManyResult.isOk() {
+                    for account in accountList {
+                        print("Successfully created account:\(account.toString())")
+                    }
+                    
+                }
             }
             )
         }
@@ -59,8 +70,10 @@ class AccountExamples {
         if let account = api.account {
             account.findMany(completionHandler: {
                   (FindManyResult : TestProjectApi.FindManyResult) -> () in
-                
+                print(FindManyResult.errorMsg)
+                print(FindManyResult.statusCode)
                 if let entities = FindManyResult.entities{
+                   
                     print("Account rows in the database (expecting at least 1):  \(entities.count)");
                     completionHandler()
                 }

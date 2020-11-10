@@ -116,19 +116,41 @@ public class TestProjectApi {
                     array.append(dict)
                 }
                 catch {
-                    
+                    print("Error converting object to dictionary")
                 }
             }
+            
+
+            
             data["data"] = array
-            //data["data"] = entities
-            //let data = try entities.asDictionary()
+
             var ids : [String]?
             var errMsg: String?
             let className = String(describing: T.self)
+            
+            //Correct Way once API is fixed
+//            var request = URLRequest(url: try! "\(self.url)/\(className)".asURL())
+//              //some header examples
+//              request.httpMethod = "POST"
+//              //parameter array
+//              request.httpBody = try! JSONSerialization.data(withJSONObject: array)
+//
+//            self.sessionManager?.request(request).responseJSON { response in
+//                    switch (response.result) {
+//                    case .success:
+//                        print("SUCCESS")
+//                        print(response.value)
+//
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
+
             self.sessionManager?.request("\(self.url)/\(className)", method: .post, parameters: data, encoding: JSONEncoding.default).responseJSON{
                 (response) in
-                
+
                 guard let httpStatusCode = response.response?.statusCode else {
+                    print("Error! CreateMany request failed")
                     return;
                  }
                 if case .success = response.result {
@@ -312,7 +334,7 @@ public class TestProjectApi {
         
         public func toString() -> String {
             let sc = statusCode == 0 ? "" : "\(self.statusCode) "
-            // Should be entity.map(DomainObject::toString), check what that is
+            // Should be entity.map(DomainObject::toString)
             return sc + (errorMessage ?? entity.map({($0.getId() ?? "[id]" )}) ?? "no entity returned")
         }
     }

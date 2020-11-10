@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "SwiftAPIClient"
   spec.version      = "0.1.3"
-  spec.summary      = "A short description of SwiftAPIClient."
+  spec.summary      = "Testing creating of POD for SwiftAPIClient"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,9 +25,10 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
+    Testing creating of POD for SwiftAPIClient -- Description
                    DESC
 
-  spec.homepage     = ""https://github.com/DylanAhTeck/SwiftAPIClient"
+  spec.homepage     = "https://github.com/DylanAhTeck/SwiftAPIClient"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -64,7 +65,8 @@ Pod::Spec.new do |spec|
   #
 
   # spec.platform     = :ios
-  # spec.platform     = :ios, "5.0"
+  #spec.platform     = :ios, "9.0"
+  spec.platform = :osx, '10.15'
 
   #  When using multiple platforms
   # spec.ios.deployment_target = "5.0"
@@ -90,7 +92,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "/**/*.swift"
+  spec.source_files  = "Classes", "SwiftAPIClient/**/*.swift"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -129,7 +131,10 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # spec.requires_arc = true
+  spec.requires_arc = true
+  
+  spec.swift_version= '5.0'
+  spec.xcconfig     = { 'SWIFT_VERSION' => '5.0' }
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"

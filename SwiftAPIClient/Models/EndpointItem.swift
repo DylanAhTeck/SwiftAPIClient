@@ -5,8 +5,8 @@
 //  Created by Dylan Ah Teck on 10/14/20.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 enum EndpointItem {
     
